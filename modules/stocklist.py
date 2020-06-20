@@ -3,6 +3,7 @@ import string
 from bs4 import BeautifulSoup
 
 def generateStockSymbols():
+    file=open("symbols.txt","w")
     alphabets=list(string.ascii_uppercase)
     symbols=[]
     for alphabet in alphabets:
@@ -15,6 +16,9 @@ def generateStockSymbols():
             symbols.append(row.findAll('td')[0].text.rstrip())
     symbols_clean=[]
     for each in symbols:
-        each=each.replace('.','-')
-        symbols_clean.append(each.split('-')[0])
+        each=each.replace('.','-').split('-')[0]
+        symbols_clean.append(each)
+        file.write(each)
+        file.write("\n")
+    file.close()
     return symbols_clean
