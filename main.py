@@ -1,4 +1,4 @@
-from modules import stocklist
+from src import stocklist
 symbols=stocklist.generateStockSymbols()
 
 # import yfinance as yf
