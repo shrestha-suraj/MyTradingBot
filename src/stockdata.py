@@ -1,9 +1,10 @@
 import requests, json
 from bs4 import BeautifulSoup
+from config import *
 
 # This function retunrns the stock data of each min of the market
 def stockData(stockTicker):
-    BASE_URL="https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={}&interval=1min&apikey=MON2MJSTOJN7HI6X".format(stockTicker)
+    BASE_URL="https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol={}&interval=1min&apikey={}".format(stockTicker,ALPHAVANTAGE_API_KEY)
     result=requests.get(BASE_URL)
     result=json.loads(result.content)['Time Series (1min)']
     values_view=result.values()
