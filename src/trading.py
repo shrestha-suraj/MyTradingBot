@@ -64,4 +64,4 @@ def replaceOrder(orderId,newQauantity,newTimeInForce):
     # Else the order is executed, again use stockPosition() function to see all the pending orders
     # Returns order object
 
-# print(stockPositions())
+buyStock('TSLA',1)
