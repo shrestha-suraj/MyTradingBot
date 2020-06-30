@@ -1,27 +1,26 @@
 import requests, json,sys
-sys.path.append('../')
-from config import *
+from config import ALPACA_API_KEY,ALPACA_SECRET_KEY
 
 BASE_URL="https://paper-api.alpaca.markets"
 ACCOUNT_URL="{}/v2/account".format(BASE_URL)
 ORDER_URL="{}/v2/orders".format(BASE_URL)
-HEADER_DATA={"APCA-API-KEY-ID":API_KEY,"APCA-API-SECRET-KEY":API_SECRET_KEY}
+HEADER_DATA={"APCA-API-KEY-ID":ALPACA_API_KEY,"APCA-API-SECRET-KEY":ALPACA_SECRET_KEY}
 
 
 # This function will be used to know the total equity and the buying powers
-def accountDetails():
+def account_details():
     result=requests.get(ACCOUNT_URL,headers=HEADER_DATA)
     return json.loads(result.content)
     # Imporatant datas are: 'buying_power' 'cash' and 'portfolio_value'
 
 # This will be used to get the array of all the position history
-def stockPositions():
+def stock_positions():
     result=requests.get(ORDER_URL,headers=HEADER_DATA)
     return json.loads(result.content)
     # Returns json data of all positions open, pending or closed
 
 # This will create new market BUY order of passed stock ticker
-def buyStock(symbol,qunatity):
+def buy_stock(symbol,qunatity):
     stockData={
         "symbol":symbol,
         "qty":qunatity,
@@ -34,7 +33,7 @@ def buyStock(symbol,qunatity):
     # Returns json data of the position that has been bought
 
 # This will create new market SELL order of passed stock ticker if it exists
-def sellStock(symbol,quantity):
+def sell_stock(symbol,quantity):
     stockData={
         "symbol":symbol,
         "qty":quantity,
@@ -50,7 +49,7 @@ def sellStock(symbol,quantity):
     # Use stockPosition() method to see if the stock exists before putting selling position
 
 # This will create a new replace order to a buy order already present in portfolio
-def replaceOrder(orderId,newQauantity,newTimeInForce):
+def replace_order(orderId,newQauantity,newTimeInForce):
     REPLACE_URL="{}/{}".format(ORDER_URL,orderId)
     stockData={
         "qty":newQauantity,
@@ -63,5 +62,3 @@ def replaceOrder(orderId,newQauantity,newTimeInForce):
     # Example: {'code':40010001,'message':'unable to replace order, order isn't sent to exchange yet'}
     # Else the order is executed, again use stockPosition() function to see all the pending orders
     # Returns order object
-
-buyStock('TSLA',1)
